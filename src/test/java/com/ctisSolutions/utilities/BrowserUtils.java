@@ -36,21 +36,21 @@ for given duration
      */
     public static void switchWindowAndVerify(String expectedInUrl, String expectedInTitle){
 
-        Set<String> allWindowsHandles = Driver1.getDriver().getWindowHandles();
+        Set<String> allWindowsHandles = Driver.getDriver().getWindowHandles();
 
         for (String each : allWindowsHandles) {
 
-            Driver1.getDriver().switchTo().window(each);
+            Driver.getDriver().switchTo().window(each);
 
-            System.out.println("Current URL: " + Driver1.getDriver().getCurrentUrl());
+            System.out.println("Current URL: " + Driver.getDriver().getCurrentUrl());
 
-            if (Driver1.getDriver().getCurrentUrl().contains(expectedInUrl)){
+            if (Driver.getDriver().getCurrentUrl().contains(expectedInUrl)){
                 break;
             }
         }
 
         //5. Assert:Title contains “expectedInTitle”
-        String actualTitle = Driver1.getDriver().getTitle();
+        String actualTitle = Driver.getDriver().getTitle();
         Assert.assertTrue(actualTitle.contains(expectedInTitle));
     }
 
@@ -59,7 +59,7 @@ for given duration
      */
     public static void verifyTitle(String expectedTitle){
 
-        Assert.assertEquals(Driver1.getDriver().getTitle(), expectedTitle);
+        Assert.assertEquals(Driver.getDriver().getTitle(), expectedTitle);
 
     }
 
@@ -68,7 +68,7 @@ for given duration
      * @param expectedInURL
      */
     public static void verifyURLContains(String expectedInURL){
-        Assert.assertTrue(Driver1.getDriver().getCurrentUrl().contains(expectedInURL));
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(expectedInURL));
     }
 
 
@@ -117,14 +117,14 @@ for given duration
      * @param targetTitle
      */
     public static void switchToWindow(String targetTitle) {
-        String origin = Driver1.getDriver().getWindowHandle();
-        for (String handle : Driver1.getDriver().getWindowHandles()) {
-            Driver1.getDriver().switchTo().window(handle);
-            if (Driver1.getDriver().getTitle().equals(targetTitle)) {
+        String origin = Driver.getDriver().getWindowHandle();
+        for (String handle : Driver.getDriver().getWindowHandles()) {
+            Driver.getDriver().switchTo().window(handle);
+            if (Driver.getDriver().getTitle().equals(targetTitle)) {
                 return;
             }
         }
-        Driver1.getDriver().switchTo().window(origin);
+        Driver.getDriver().switchTo().window(origin);
     }
 
     /**
@@ -133,7 +133,7 @@ for given duration
      * @param element on which to hover
      */
     public static void hover(WebElement element) {
-        Actions actions = new Actions(Driver1.getDriver());
+        Actions actions = new Actions(Driver.getDriver());
         actions.moveToElement(element).perform();
     }
 
@@ -159,7 +159,7 @@ for given duration
      */
     public static List<String> getElementsText(By locator) {
 
-        List<WebElement> elems = Driver1.getDriver().findElements(locator);
+        List<WebElement> elems = Driver.getDriver().findElements(locator);
         List<String> elemTexts = new ArrayList<>();
 
         for (WebElement el : elems) {
@@ -189,7 +189,7 @@ for given duration
      * @return
      */
     public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
-        WebDriverWait wait = new WebDriverWait(Driver1.getDriver(), timeToWaitInSec);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeToWaitInSec);
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -201,7 +201,7 @@ for given duration
      * @return
      */
     public static WebElement waitForVisibility(By locator, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver1.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
@@ -213,7 +213,7 @@ for given duration
      * @return
      */
     public static WebElement waitForClickablility(WebElement element, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver1.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
@@ -225,7 +225,7 @@ for given duration
      * @return
      */
     public static WebElement waitForClickablility(By locator, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver1.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
 
     }
@@ -242,7 +242,7 @@ for given duration
             }
         };
         try {
-            WebDriverWait wait = new WebDriverWait(Driver1.getDriver(), timeOutInSeconds);
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeOutInSeconds);
             wait.until(expectation);
         } catch (Throwable error) {
             error.printStackTrace();
@@ -257,7 +257,7 @@ for given duration
      */
     public static void verifyElementDisplayed(By by) {
         try {
-            Assert.assertTrue("Element not visible: " + by, Driver1.getDriver().findElement(by).isDisplayed());
+            Assert.assertTrue("Element not visible: " + by, Driver.getDriver().findElement(by).isDisplayed());
         } catch (NoSuchElementException e) {
             e.printStackTrace();
             Assert.fail("Element not found: " + by);
@@ -273,7 +273,7 @@ for given duration
      */
     public static void verifyElementNotDisplayed(By by) {
         try {
-            Assert.assertFalse("Element should not be visible: " + by, Driver1.getDriver().findElement(by).isDisplayed());
+            Assert.assertFalse("Element should not be visible: " + by, Driver.getDriver().findElement(by).isDisplayed());
         } catch (NoSuchElementException e) {
             e.printStackTrace();
 
@@ -335,8 +335,8 @@ for given duration
      * @param element
      */
     public static void clickWithJS(WebElement element) {
-        ((JavascriptExecutor) Driver1.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-        ((JavascriptExecutor) Driver1.getDriver()).executeScript("arguments[0].click();", element);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
     }
 
 
@@ -346,7 +346,7 @@ for given duration
      * @param element
      */
     public static void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) Driver1.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     /**
@@ -355,7 +355,7 @@ for given duration
      * @param element
      */
     public static void doubleClick(WebElement element) {
-        new Actions(Driver1.getDriver()).doubleClick(element).build().perform();
+        new Actions(Driver.getDriver()).doubleClick(element).build().perform();
     }
 
     /**
@@ -366,7 +366,7 @@ for given duration
      * @param attributeValue
      */
     public static void setAttribute(WebElement element, String attributeName, String attributeValue) {
-        ((JavascriptExecutor) Driver1.getDriver()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, attributeName, attributeValue);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, attributeName, attributeValue);
     }
 
     /**
@@ -374,9 +374,9 @@ for given duration
      * @param element
      */
     public static void highlight(WebElement element) {
-        ((JavascriptExecutor) Driver1.getDriver()).executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
         waitFor(1);
-        ((JavascriptExecutor) Driver1.getDriver()).executeScript("arguments[0].removeAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].removeAttribute('style', 'background: yellow; border: 2px solid red;');", element);
     }
 
     /**
@@ -420,7 +420,7 @@ for given duration
      * @param element
      */
     public static void executeJScommand(WebElement element, String command) {
-        JavascriptExecutor jse = (JavascriptExecutor) Driver1.getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
         jse.executeScript(command, element);
 
     }
@@ -431,7 +431,7 @@ for given duration
      * @param command
      */
     public static void executeJScommand(String command) {
-        JavascriptExecutor jse = (JavascriptExecutor) Driver1.getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
         jse.executeScript(command);
 
     }
@@ -450,7 +450,7 @@ for given duration
         while (counter < attempts) {
             try {
                 //selenium must look for element again
-                clickWithJS(Driver1.getDriver().findElement(by));
+                clickWithJS(Driver.getDriver().findElement(by));
                 //if click is successful - then break
                 break;
             } catch (WebDriverException e) {
@@ -472,7 +472,7 @@ for given duration
      * @param time
      */
     public static void waitForPresenceOfElement(By by, long time) {
-        new WebDriverWait(Driver1.getDriver(), time).until(ExpectedConditions.presenceOfElementLocated(by));
+        new WebDriverWait(Driver.getDriver(), time).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
 
