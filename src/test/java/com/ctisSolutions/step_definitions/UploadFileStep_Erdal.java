@@ -39,13 +39,8 @@ public class UploadFileStep_Erdal {
         erdalPage.clickUploadFilesBtn();
     }
 
-    @Given("Verify user can see Upload files options")
-    public void verifyUserCanSeeUploadFilesOptions() {
-        erdalPage.verifyUploadOptionsVisible();
-    }
-
     @When("User should be able to upload three file at same time")
-    public void userShouldBeAbleToUploadThreeFileAtSameTime() throws InterruptedException {
+    public void user_should_be_able_to_upload_three_file_at_same_time() {
         erdalPage.uploadThreeFiles();
     }
 
@@ -54,6 +49,24 @@ public class UploadFileStep_Erdal {
         erdalPage.verifyUploadedFiles();
     }
 
+    @When("user should be able to upload files in pdf txt docx formats")
+    public void userShouldBeAbleToUploadFilesInPdfTxtDocxFormats() {
+        erdalPage.uploadPdfTxtDocx();
+    }
+
+    @Then("Verify users uploaded files in pdf txt docx formats")
+    public void verifyUsersUploadedFilesInPdfTxtDocxFormats() {
+        erdalPage.verifyUploadedFilesInPdfTxtDocxFormats();
+    }
 
 
+    @When("user should be able to upload files in jpeg gif png formats")
+    public void userShouldBeAbleToUploadFilesInJpegGifPngFormats() {
+        erdalPage.uploadJpegGifPng();
+    }
+
+    @Then("Verify users uploaded files in jpeg gif png formats")
+    public void verifyUsersUploadedFilesInJpegGifPngFormats() {
+        erdalPage.verifyUploadedFilesInJpegGifPngFormats();
+    }
 }
