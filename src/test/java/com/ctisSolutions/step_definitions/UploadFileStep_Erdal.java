@@ -69,4 +69,20 @@ public class UploadFileStep_Erdal {
     public void verifyUsersUploadedFilesInJpegGifPngFormats() {
         erdalPage.verifyUploadedFilesInJpegGifPngFormats();
     }
+
+    @When("user should be able to upload some files")
+    public void user_should_be_able_to_upload_some_files() {
+        erdalPage.uploadThreeFiles();
+        erdalPage.verifyUploadedFiles();
+    }
+
+    @When("User should be able to Insert uploaded file into the text field")
+    public void user_should_be_able_to_ınsert_uploaded_file_into_the_text_field() {
+        erdalPage.insertAllUpdated();
+    }
+
+    @Then("Verify files are in the text field")
+    public void verify_files_are_in_the_text_field() {
+        erdalPage.verifyInsertAllUpdated();
+    }
 }

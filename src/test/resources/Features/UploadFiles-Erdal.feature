@@ -24,3 +24,9 @@ Feature: Upload Files Functionality
   Scenario: User should be able to upload files in jpeg, gif ,png formats.
     When user should be able to upload files in jpeg gif png formats
     Then Verify users uploaded files in jpeg gif png formats
+
+  @CTS10-336 @CRM
+  Scenario: User should be able to insert the files and images into the text
+    When user should be able to upload some files
+    And User should be able to Insert uploaded file into the text field
+    Then Verify files are in the text field

@@ -3,6 +3,7 @@ package com.ctisSolutions.pages;
 import com.ctisSolutions.utilities.BrowserUtils;
 import com.ctisSolutions.utilities.Driver;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -47,12 +48,35 @@ public class UploadFilePage_Erdal {
     @FindBy(xpath = "//span[contains(text(),'.jpg')]")
     public WebElement uploadedJpeg;
 
+    @FindBy(xpath = "//tbody[@class='diskuf-placeholder-tbody']/tr[1]/td[@class='files-info']/span")
+    public WebElement insertable1;
+
+    @FindBy(xpath = "//tbody[@class='diskuf-placeholder-tbody']/tr[2]/td[@class='files-info']/span[@class='insert-btn']")
+    public WebElement insertable2;
+
+    @FindBy(xpath = "//tbody[@class='diskuf-placeholder-tbody']/tr[3]/td[@class='files-info']/span")
+    public WebElement insertable3;
+
+//    /html[1]/body[1]/img[1]
+//img[contains(@src,'filename=pngsample')][@style]
+    @FindBy(xpath = "/html[1]/body[1]/img[1]")
+    public WebElement insertedPng;
+    @FindBy(xpath = "//img[contains(@src,'filename=gifsample')][@style]")
+    public WebElement insertedGif;
+    @FindBy(xpath = "//span[contains(text(),'docxsample.docx')]")
+    public WebElement insertedDocx;
+
+
+
+//img[contains(@src,'filename=gifsample.gif')]
+
+
 
     public UploadFilePage_Erdal() {
 
         PageFactory.initElements(Driver.getDriver(), this);
 
-    }
+    }//tbody/tr[@id='disk-edit-attachn2749']/td[4]/span[1]/span[1]
 
     public void goToMessageTextField(){
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
@@ -123,6 +147,30 @@ public class UploadFilePage_Erdal {
         Assert.assertTrue(uploadedJpeg.isDisplayed());
         Assert.assertTrue(uploadedGif.isDisplayed());
         Assert.assertTrue(uploadedPng.isDisplayed());
+
+    }
+
+    public void insertAllUpdated(){
+
+        BrowserUtils.sleep(1);
+        insertable1.click();
+        BrowserUtils.sleep(1);
+        insertable2.click();
+        BrowserUtils.sleep(1);
+        insertable3.click();
+    }
+
+    public void verifyInsertAllUpdated(){
+
+        Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
+//        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 5);
+//        wait.until(ExpectedConditions.visibilityOf(insertedPng));
+
+//        String expectedPngStyle="max-width:400px;max-height:400px;";
+        Assert.assertTrue(insertedPng.isDisplayed());
+        Assert.assertTrue(insertedGif.isDisplayed());
+        Assert.assertTrue(insertedDocx.isDisplayed());
+        Driver.getDriver().switchTo().parentFrame();
 
     }
 
