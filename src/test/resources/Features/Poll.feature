@@ -17,7 +17,7 @@ Feature: As a user, I should be able to create a poll by clicking on Poll tab un
   And user can delete the added question and its answers
   And User clicks Allow multiple choice  checkbox
   And User clicks SEND button
-  Then verify user can select multiple choices
+  And verify user can select multiple choices
   And User clicks More button
   And User clicks Delete  button
   And User clicks OK  button
