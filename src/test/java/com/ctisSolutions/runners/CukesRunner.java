@@ -14,9 +14,9 @@ import org.junit.runner.RunWith;
                 "me.jvt.cucumber.report.PrettyReports:target/cucumber",
         },
         features = "src/test/resources/features",
-        glue = "com/ctissolutions/step_definitions",
+        glue = "com/ctisSolutions/step_definitions",
         dryRun = false,
-        tags = "@login",
+        tags = "@wip",
         publish = false
 
 )
