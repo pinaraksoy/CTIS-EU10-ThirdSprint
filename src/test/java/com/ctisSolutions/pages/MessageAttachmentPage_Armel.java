@@ -1,6 +1,12 @@
 package com.ctisSolutions.pages;
 
+import com.ctisSolutions.utilities.BrowserUtils;
+import com.ctisSolutions.utilities.Driver;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class MessageAttachmentPage_Armel {
@@ -19,7 +25,7 @@ public class MessageAttachmentPage_Armel {
     @FindBy (xpath = "//div[contains(text(),'hr1@cybertekschool.com')]")
     public WebElement addMention_userToMention;
 
-    @FindBy (xpath = "")
+    @FindBy (xpath = "//input[@id='feed-add-post-destination-input']")
     public WebElement addMention_recepientField;
 
 
@@ -53,6 +59,10 @@ public class MessageAttachmentPage_Armel {
     @FindBy (xpath = "//span[@class='bxhtmled-video-error']")
     public WebElement insertVideo_allertMessage;
 
+    @FindBy (xpath = "")
+    public WebElement insertVideo_insertedVideo;
+
+
     //TS04
 
     @FindBy (xpath = "")
@@ -62,6 +72,9 @@ public class MessageAttachmentPage_Armel {
 
     @FindBy (xpath = "")
     public WebElement deleteVideo_addedVideo;
+
+    @FindBy (xpath = "//body[1]/div[16]/span[3]/span[2]")
+    public WebElement deleteVideo_popUpMenuItem;
 
     //TS05
 
@@ -77,14 +90,6 @@ public class MessageAttachmentPage_Armel {
     //TS06
     @FindBy (xpath = "//span[@class='feed-add-post-tags']")
     public WebElement addTag_addedTag;
-
-
-
-
-
-
-
-
 
 
     //end step
@@ -108,9 +113,75 @@ public class MessageAttachmentPage_Armel {
     @FindBy (xpath = "")
     public WebElement sentMessageTC5;
 
+    //----------------------------------------------------------------------------//
+
+
+    public void userAbleToAddMention(){
+        String recepient = "admin";
+
+        addMention_mentionIcon.click();
+        addMention_recepientField.sendKeys(recepient);
+        Assert.assertEquals(recepient,addMention_recepientField.getText());
+
+    }
+
+    public void userAbleToAttachlinkAndText(){
+        String text = "Java Video";
+        String link = "https://youtu.be/9U684GbFST4";
+
+        addLink_linkIcon.click();
+        addLink_textField.sendKeys(text);
+        addLink_linkField.sendKeys(link);
+        addLink_saveButton.click();
+
+    }
+
+    public void userAbleToInsertVideo() throws InterruptedException {
+        insertVideo_insertVideoIcon.click();
+        insertVideo_videoSource.sendKeys("string");
+        Thread.sleep(5000);
+        BrowserUtils.verifyElementNotDisplayed(By.xpath("//span[@title='Insert video']//i"));
+        insertVideo_saveButton.click();
+
+    }
+
+    public void userAbleToDeleteLinkBeforeSending(){
+
+        userAbleToAttachlinkAndText();
+        messageField.clear();
 
 
 
+
+
+    }
+
+    public void userAbleToDeleteVideoBeforeSending() throws InterruptedException {
+
+        userAbleToInsertVideo();
+
+        WebDriver driver ;
+        driver = Driver.getDriver();
+        Actions actions = new Actions(driver);
+        insertVideo_insertedVideo.isDisplayed();
+        actions.contextClick(insertVideo_insertedVideo).perform();
+        deleteVideo_popUpMenuItem.click();
+    }
+
+    public void userAbleToAddTag(){
+        addTag_tagIcon.click();
+        addTag_tagField.click();
+        addTag_tagField.sendKeys("");
+        addTag_addButton.click();
+        Assert.assertNotNull(addTag_tagField);
+
+    }
+
+    public void userAbleToDeleteTagBeforeSending(){
+        userAbleToAddTag();
+        addTag_tagField.clear();
+        Assert.assertNull(addTag_addedTag);
+    }
 
 
 
