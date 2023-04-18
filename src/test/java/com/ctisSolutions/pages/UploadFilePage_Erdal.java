@@ -15,7 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class UploadFilePage_Erdal {
 
-//    WebDriver driver;
 
     @FindBy(xpath = "//button[@id='blog-submit-button-save']")
     public WebElement send_btn;
@@ -74,20 +73,17 @@ public class UploadFilePage_Erdal {
     @FindBy(xpath = "//tbody/tr[3]/td[@class='files-del-btn']/span[@class='del-but']")
     public WebElement delBtn3;
 
-    //img[@class='files-preview']
     @FindBy(xpath = "//img[@class='files-preview']")
     public WebElement imgFieldOfAddedFile;
 
-    //*[@class='files-name-edit-btn']
-    //span[@class='files-text']//span)[5]
-    //    (//*[@class='files-name-edit-btn'])[1]
     @FindBy(xpath = "(//span[@class='files-text']//span)[5]")
     public WebElement renameBtn;
 
-    //span[@title='Click to insert file']
-    //input[@class='files-name-edit-inp']
     @FindBy (xpath = "//input[@class='files-name-edit-inp']")
     public WebElement renamedFileInput;
+
+    @FindBy (xpath = "//span[@title='Click to insert file']")
+    public WebElement renamedFileUsetoTextAssert;
 
 
 
@@ -212,19 +208,22 @@ public class UploadFilePage_Erdal {
         uploadFileAndImagesBox.sendKeys("C:\\Users\\a\\Dropbox\\My PC (Guardians)\\Desktop\\Upload files for E10Project\\gifsample.gif");
     }
 
-
     public void renameFile(String string){
 
         renamedFileInput.click();
-        renamedFileInput.clear();
+        renamedFileInput.sendKeys(Keys.chord(Keys.CONTROL, "a")+Keys.CLEAR);
+//        renamedFileInput.clear();
 //        renamedFileInput.sendKeys(Keys.CLEAR);
         renamedFileInput.sendKeys(string);
         renamedFileInput.sendKeys(Keys.ENTER);
+        BrowserUtils.sleep(1);
     }
 
     public void verifyRenamedFile(){
-        String actualName = renamedFileInput.getText();
-        String expectedName = "renamedFile";
+        String actualName = renamedFileUsetoTextAssert.getText();
+        String expectedName = "renamedFile.gif";
+//        System.out.println("expectedName = " + expectedName);
+//        System.out.println("actualName = " + actualName);
         Assert.assertEquals(actualName,expectedName);
     }
 
