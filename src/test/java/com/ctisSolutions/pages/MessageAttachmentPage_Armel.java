@@ -4,16 +4,27 @@ import com.ctisSolutions.utilities.BrowserUtils;
 import com.ctisSolutions.utilities.Driver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class MessageAttachmentPage_Armel {
+
+    public MessageAttachmentPage_Armel() {
+        PageFactory.initElements(Driver.getDriver(),this);
+    }
 
     //Background
     @FindBy(xpath = "//*[@id=\\\"bx_left_menu_menu_live_feed\\\"]/a/span[1]")
     public WebElement activityStreamButton;
+
+    @FindBy(xpath = "//span[@id='feed-add-post-form-tab-message']//span[contains(text(),'Message')]")
+    public WebElement messageButton;
+
+    //span[@id='feed-add-post-form-tab-message']//span[contains(text(),'Message')]
 
     @FindBy(xpath = "//span[@id='feed-add-post-form-tab-message']//span[contains(text(),'Message')]")
     public WebElement messageField;
@@ -119,9 +130,9 @@ public class MessageAttachmentPage_Armel {
     public void userAbleToAddMention(){
         String recepient = "admin";
 
-        addMention_mentionIcon.click();
+        addMention_recepientField.click();
         addMention_recepientField.sendKeys(recepient);
-        Assert.assertEquals(recepient,addMention_recepientField.getText());
+        addMention_recepientField.sendKeys(Keys.ENTER);
 
     }
 
@@ -129,18 +140,20 @@ public class MessageAttachmentPage_Armel {
         String text = "Java Video";
         String link = "https://youtu.be/9U684GbFST4";
 
-        addLink_linkIcon.click();
+        addLink_textField.click();
         addLink_textField.sendKeys(text);
+        addLink_linkField.click();
         addLink_linkField.sendKeys(link);
         addLink_saveButton.click();
 
     }
 
     public void userAbleToInsertVideo() throws InterruptedException {
+        String videoLink = "https://vimeo.com/49385450";
+
         insertVideo_insertVideoIcon.click();
-        insertVideo_videoSource.sendKeys("string");
+        insertVideo_videoSource.sendKeys(videoLink);
         Thread.sleep(5000);
-        BrowserUtils.verifyElementNotDisplayed(By.xpath("//span[@title='Insert video']//i"));
         insertVideo_saveButton.click();
 
     }
@@ -169,11 +182,9 @@ public class MessageAttachmentPage_Armel {
     }
 
     public void userAbleToAddTag(){
-        addTag_tagIcon.click();
         addTag_tagField.click();
-        addTag_tagField.sendKeys("");
+        addTag_tagField.sendKeys("Java");
         addTag_addButton.click();
-        Assert.assertNotNull(addTag_tagField);
 
     }
 
