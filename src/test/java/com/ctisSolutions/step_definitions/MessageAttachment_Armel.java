@@ -227,6 +227,7 @@ public class MessageAttachment_Armel {
 
     @Then("user deleted tags is not attached to the message that has been sent")
     public void user_deleted_tags_is_not_attached_to_the_message_that_has_been_sent() {
+        armelPage.sentMessageTC2.isDisplayed();
 
     }
 
