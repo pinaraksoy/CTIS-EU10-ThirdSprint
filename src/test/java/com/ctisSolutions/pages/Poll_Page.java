@@ -1,7 +1,7 @@
 package com.ctisSolutions.pages;
 
 import com.ctisSolutions.utilities.Driver;
-import io.cucumber.java.zh_cn.假如;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -101,5 +101,19 @@ public class Poll_Page {
     @FindBy(xpath = "//span[text()='The post has been deleted.']")
     public WebElement postDeletedMessage;
 
+    @FindBy(xpath = "//span[.='Please specify at least one person.']")
+    public WebElement atLeastOnePersonMessage;
 
+    @FindBy(xpath = "//span[.='The message title is not specified']")
+    public WebElement titleWarningMessage;
+
+    @FindBy(xpath = "//span[.='The question text is not specified.']")
+    public WebElement questionWarningMessage;
+
+    public WebElement answerWarningMessage(String question){
+        String path = "//span[.='The question \"" +question+ "\" has no answers.']";
+        WebElement answerWarningMessage= Driver.getDriver().findElement(By.xpath(path));
+
+        return answerWarningMessage;
+    }
 }
