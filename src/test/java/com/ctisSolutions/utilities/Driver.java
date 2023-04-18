@@ -36,16 +36,22 @@ public class Driver {
             System.out.println("Browser: " + browser);
             switch (browser) {
                 case "remote-chrome":
-                    try {
+                    //try {
                         // assign your jenkin server address
-                        String JenkinAddress = "3.218.244.90";
-                        URL url = new URL("http://" + JenkinAddress + ":8081/");
-                        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-                        desiredCapabilities.setBrowserName("chrome");
-                        driver = new RemoteWebDriver(url, desiredCapabilities);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    //    String JenkinAddress = "3.218.244.90";
+                    //    URL url = new URL("http://" + JenkinAddress + ":8081/");
+                        WebDriverManager.chromedriver().setup();
+                        ChromeOptions option1 = new ChromeOptions();
+                        option1.addArguments("--remote-allow-origins=*");
+                        driver=new ChromeDriver(option1);
+
+
+                        // DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+                       // desiredCapabilities.setBrowserName("chrome");
+                       // driver = new RemoteWebDriver(url, desiredCapabilities);
+                  //  } catch (Exception e) {
+                   //     e.printStackTrace();
+                  //  }
                     break;
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
