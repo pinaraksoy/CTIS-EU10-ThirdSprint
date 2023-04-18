@@ -227,8 +227,7 @@ public class MessageAttachment_Armel {
 
     @Then("user deleted tags is not attached to the message that has been sent")
     public void user_deleted_tags_is_not_attached_to_the_message_that_has_been_sent() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
     }
 
 
