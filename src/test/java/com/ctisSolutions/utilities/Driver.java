@@ -1,116 +1,88 @@
 package com.ctisSolutions.utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
 
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
-    static String browser;
 
-    private Driver() {
-    }
+    /*
+   Creating a private constructor, so we are closing
+   access to the object of this class from outside the class
+    */
+    private Driver(){}
 
-    private static WebDriver driver;
+    /*
+    We make WebDriver private, because we want to close access from outside the class.
+    We make it static because we will use it in a static method.
+     */
+    // private static WebDriver driver; // value is null by default
 
-    public static WebDriver getDriver() {
-        if (driver == null) {
-            if (System.getProperty("BROWSER") == null) {
-                browser = ConfigurationReader.getProperty("browser");
-            } else {
-                browser = System.getProperty("BROWSER");
-            }
-            System.out.println("Browser: " + browser);
-            switch (browser) {
-                case "remote-chrome":
-                    //try {
-                        // assign your jenkin server address
-                    //    String JenkinAddress = "3.218.244.90";
-                    //    URL url = new URL("http://" + JenkinAddress + ":8081/");
-                        WebDriverManager.chromedriver().setup();
-                        ChromeOptions option1 = new ChromeOptions();
-                        option1.addArguments("--remote-allow-origins=*");
-                        driver=new ChromeDriver(option1);
+    private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
 
 
-                        // DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-                       // desiredCapabilities.setBrowserName("chrome");
-                       // driver = new RemoteWebDriver(url, desiredCapabilities);
-                  //  } catch (Exception e) {
-                   //     e.printStackTrace();
-                  //  }
-                    break;
+
+    /*
+    Create a re-usable utility method which will return same driver instance when we call it
+     */
+    public static WebDriver getDriver(){
+
+        if (driverPool.get() == null){
+
+            /*
+            We read our browserType from configuration.properties.
+            This way, we can control which browser is opened from outside our code, from configuration.properties.
+             */
+            String browserType = ConfigurationReader.getProperty("browser");
+
+
+            /*
+                Depending on the browserType that will be return from configuration.properties file
+                switch statement will determine the case, and open the matching browser
+            */
+            switch (browserType){
                 case "chrome":
-                    WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
-                    options.addArguments("--lang=en");
-                  //options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
-                    driver=new ChromeDriver(options);
-                    driver.manage().window().maximize();
-                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-                    break;
-                case "chrome-headless":
+                    options.addArguments("--remote-allow-origins=*");
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver(new ChromeOptions().setHeadless(true));
+                    driverPool.set(new ChromeDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
-                case "firefox":
+                case "firefox" :
                     WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver();
+                    driverPool.set(new FirefoxDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
-                case "firefox-headless":
-                    WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true));
-                    break;
-
-                case "ie":
-                    if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-                        throw new WebDriverException("Your operating system does not support the requested browser");
-                    }
-                    WebDriverManager.iedriver().setup();
-                    driver = new InternetExplorerDriver();
-                    break;
-
-                case "edge":
-                    if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-                        throw new WebDriverException("Your operating system does not support the requested browser");
-                    }
+                case "edge" :
                     WebDriverManager.edgedriver().setup();
-                    driver = new EdgeDriver();
+                    driverPool.set(new EdgeDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
-                case "safari":
-                    if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                        throw new WebDriverException("Your operating system does not support the requested browser");
-                    }
-                    WebDriverManager.getInstance(SafariDriver.class).setup();
-                    driver = new SafariDriver();
-                    break;
+
             }
         }
 
+        return driverPool.get();
 
-
-        return driver;
     }
 
-    public static void closeDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
+    /*
+    This method will make sure our driver value is always null after using quit() method
+     */
+
+    public static void closeDriver(){
+        if (driverPool.get() != null){
+            driverPool.get().quit(); // this line will terminate the existing session. value will not even be null
+            driverPool.remove();
         }
     }
 }
