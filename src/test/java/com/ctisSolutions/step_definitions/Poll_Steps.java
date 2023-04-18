@@ -58,11 +58,11 @@ public class Poll_Steps {
     public void user_click_x_sign_for_closing_contacts_list() {
          pollPage.closeContactListSign.click();
     }
-    @When("User clicks Question and write a question")
-    public void user_clicks_question_and_write_a_question() {
 
-        pollPage.question1Input.sendKeys("Question 1 template");
-
+    @When("User clicks Question and write a question as {string}")
+    public void user_clicks_question_and_write_a_question_as(String question) {
+        pollPage.question1Input.click();
+        pollPage.question1Input.sendKeys(question);
     }
     @And("User clicks AnswerFirst and write an answer")
     public void user_clicks_answer_first_and_write_an_answer() {
@@ -102,7 +102,7 @@ public class Poll_Steps {
     }
      @And("User clicks on checkboxes")
     public void user_clicks_on_checkboxes() {
-        WebDriverWait wait=new WebDriverWait(Driver.getDriver(),5);
+        WebDriverWait wait=new WebDriverWait(Driver.getDriver(),10);
         wait.until(ExpectedConditions.elementToBeClickable(pollPage.checkboxOfFirstAnswer));
         pollPage.checkboxOfFirstAnswer.click();
         pollPage.checkboxOfSecondAnswer.click();
@@ -135,7 +135,25 @@ public class Poll_Steps {
     }
     @Then("Verify {string} message is displayed")
     public void verify_message_is_displayed(String string) {
-        pollPage.postDeletedMessage.isDisplayed();
+        Assert.assertTrue(pollPage.postDeletedMessage.isDisplayed());
+    }
+    @Then("the warning message should be displayed about title")
+    public void the_warning_message_should_be_displayed_about_title() {
+        Assert.assertTrue(pollPage.titleMessageBox.isDisplayed());
+    }
+
+    @Then("the warning message of {string} should be displayed about no answers")
+    public void the_warning_message_of_should_be_displayed_about_no_answers(String question) {
+        Assert.assertTrue(pollPage.answerWarningMessage(question).isDisplayed());
+    }
+    @Then("the warning message should be displayed about question text")
+    public void the_warning_message_should_be_displayed_about_question_text() {
+       Assert.assertTrue(pollPage.questionWarningMessage.isDisplayed());
+    }
+
+    @Then("the warning message should be displayed about at least one person")
+    public void the_warning_message_should_be_displayed_about_at_least_one_person() {
+       pollPage.atLeastOnePersonMessage.isDisplayed();
     }
 
 

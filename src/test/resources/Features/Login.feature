@@ -5,7 +5,7 @@
 Feature: Testing Ctissolutions application login functionality
 
   Background:
-    Given the user should enter app with valid "https://qa.ctissolutions.com/" "hr1@cybertekschool.com" "UserUser"
+    Given the user should enter app with valid "https://qa.ctissolutions.com/" "hr15@cybertekschool.com" "UserUser"
 
 
   Scenario:
