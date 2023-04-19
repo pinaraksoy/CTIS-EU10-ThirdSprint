@@ -92,7 +92,7 @@ public class UploadFilePage_Erdal {
 
         PageFactory.initElements(Driver.getDriver(), this);
 
-    }//tbody/tr[@id='disk-edit-attachn2749']/td[4]/span[1]/span[1]
+    }
 
     public void goToMessageTextField(){
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
@@ -179,10 +179,6 @@ public class UploadFilePage_Erdal {
     public void verifyInsertAllUpdated(){
 
         Driver.getDriver().switchTo().frame(Driver.getDriver().findElement(By.xpath("//iframe[@class='bx-editor-iframe']")));
-//        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 5);
-//        wait.until(ExpectedConditions.visibilityOf(insertedPng));
-
-//        String expectedPngStyle="max-width:400px;max-height:400px;";
         Assert.assertTrue(insertedPng.isDisplayed());
         Assert.assertTrue(insertedGif.isDisplayed());
         Assert.assertTrue(insertedDocx.isDisplayed());
@@ -212,8 +208,6 @@ public class UploadFilePage_Erdal {
 
         renamedFileInput.click();
         renamedFileInput.sendKeys(Keys.chord(Keys.CONTROL, "a")+Keys.CLEAR);
-//        renamedFileInput.clear();
-//        renamedFileInput.sendKeys(Keys.CLEAR);
         renamedFileInput.sendKeys(string);
         renamedFileInput.sendKeys(Keys.ENTER);
         BrowserUtils.sleep(1);
@@ -222,8 +216,6 @@ public class UploadFilePage_Erdal {
     public void verifyRenamedFile(){
         String actualName = renamedFileUsetoTextAssert.getText();
         String expectedName = "renamedFile.gif";
-//        System.out.println("expectedName = " + expectedName);
-//        System.out.println("actualName = " + actualName);
         Assert.assertEquals(actualName,expectedName);
     }
 
