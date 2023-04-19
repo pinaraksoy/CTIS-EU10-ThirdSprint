@@ -11,6 +11,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
@@ -18,15 +19,9 @@ public class MessageAttachment_Armel {
 
 
     WebDriver driver;
-    MessageAttachmentPage_Armel armelPage;
-
-    @Before(value = "@wip", order = 2)
-    public void setUp() {
-        driver = Driver.getDriver();
-        armelPage = new MessageAttachmentPage_Armel();
+    MessageAttachmentPage_Armel armelPage = new MessageAttachmentPage_Armel();
 
 
-    }
 
     @Given("user should enter app with valid {string} {string} {string}")
     public void user_should_enter_app_with_valid(String string, String string2, String string3) {
@@ -50,7 +45,11 @@ public class MessageAttachment_Armel {
     }
     @And("user add people to mention")
     public void user_add_people_to_mention() {
-        armelPage.userAbleToAddMention();
+        String recepient = "admin";
+
+        armelPage.addMention_recepientField.click();
+        armelPage.addMention_recepientField.sendKeys(recepient);
+        armelPage.addMention_recepientField.sendKeys(Keys.ENTER);
     }
     @And("user should see selected people on the recipient field")
     public void user_should_see_selected_people_on_the_recipient_field() {
@@ -59,12 +58,12 @@ public class MessageAttachment_Armel {
     }
     @And("user clicks on the send button")
     public void user_clicks_on_the_send_button() {
+        armelPage.messageField.sendKeys("AC1");
        armelPage.sendButton.click();
     }
     @Then("user sees mentioned people in the message that has been sent")
     public void user_sees_mentioned_people_in_the_message_that_has_been_sent() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
     }
 
     @When("user clicks the link icon")

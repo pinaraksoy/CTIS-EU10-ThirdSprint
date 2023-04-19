@@ -18,7 +18,7 @@ public class MessageAttachmentPage_Armel {
     }
 
     //Background
-    @FindBy(xpath = "//*[@id=\\\"bx_left_menu_menu_live_feed\\\"]/a/span[1]")
+    @FindBy(xpath = "//span[normalize-space()='Activity Stream']")
     public WebElement activityStreamButton;
 
     @FindBy(xpath = "//span[@id='feed-add-post-form-tab-message']//span[contains(text(),'Message')]")
