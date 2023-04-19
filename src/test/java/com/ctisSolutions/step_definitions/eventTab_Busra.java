@@ -140,6 +140,13 @@ public class eventTab_Busra {
         eventPageBusra.sendButton.click();
     }
 
+    @Then("user should see the sharing event")
+    public void userShouldSeeTheSharingEvent() throws InterruptedException {
+        Thread.sleep(3000);
+        eventPageBusra.sharingEventAsMessage.isDisplayed();
+
+    }
+
 
 
 

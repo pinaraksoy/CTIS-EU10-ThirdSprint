@@ -33,6 +33,7 @@ Feature:  Users should be able to create events by clicking on Event tab under A
           When user click to event name button
           And user write event
           Then click send event button
+          Then user should see the sharing event
 
     @CTS10-347
     Scenario: User should be able to cancel sending event at any time before sending

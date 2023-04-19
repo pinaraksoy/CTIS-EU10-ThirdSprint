@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com/ctisSolutions/step_definitions",
         dryRun = false,
-        tags = "@CTS10-344",
+        tags = "@CTS10-346",
         publish = false
 
 )

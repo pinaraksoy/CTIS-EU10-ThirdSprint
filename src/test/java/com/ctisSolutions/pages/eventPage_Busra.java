@@ -70,6 +70,9 @@ public class eventPage_Busra {
     public WebElement cancelButton;
 
 
+    @FindBy (xpath = "(//div[@class='feed-calendar-view-text'])[1]")
+    public WebElement sharingEventAsMessage;
+
 
 
 }
