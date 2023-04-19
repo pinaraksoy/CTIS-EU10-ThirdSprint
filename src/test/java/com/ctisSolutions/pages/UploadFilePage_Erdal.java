@@ -4,7 +4,10 @@ import com.ctisSolutions.utilities.BrowserUtils;
 import com.ctisSolutions.utilities.Driver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,11 +25,6 @@ public class UploadFilePage_Erdal {
     @FindBy(id = "bx-b-uploadfile-blogPostForm")
     public WebElement uploadFilesBtn;
 
-    //div[@class='diskuf-uploader']//input[@name='bxu_files[]']
-    //*[@class='wd-fa-add-file-light-text'][@xpath='1']
-    //*[@class='wd-fa-add-file-light-title-text'][@xpath='1'][.='Upload files and images']
-    //*[@class='diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main'][@colspan='0'][@xpath='1']
-    //input[@name='bxu_files[]']
     @FindBy(xpath="//input[@name='bxu_files[]']")
     public WebElement uploadFileAndImagesBox;
 
@@ -57,18 +55,36 @@ public class UploadFilePage_Erdal {
     @FindBy(xpath = "//tbody[@class='diskuf-placeholder-tbody']/tr[3]/td[@class='files-info']/span")
     public WebElement insertable3;
 
-//    /html[1]/body[1]/img[1]
-//img[contains(@src,'filename=pngsample')][@style]
     @FindBy(xpath = "/html[1]/body[1]/img[1]")
     public WebElement insertedPng;
+
     @FindBy(xpath = "//img[contains(@src,'filename=gifsample')][@style]")
     public WebElement insertedGif;
+
     @FindBy(xpath = "//span[contains(text(),'docxsample.docx')]")
     public WebElement insertedDocx;
 
+    @FindBy(xpath = "//tbody/tr[1]/td[@class='files-del-btn']/span[@class='del-but']")
+    public WebElement delBtn1;
 
+    @FindBy(xpath = "//tbody/tr[2]/td[@class='files-del-btn']/span[@class='del-but']")
+    public WebElement delBtn2;
 
-//img[contains(@src,'filename=gifsample.gif')]
+    @FindBy(xpath = "//tbody/tr[3]/td[@class='files-del-btn']/span[@class='del-but']")
+    public WebElement delBtn3;
+
+    @FindBy(xpath = "//img[@class='files-preview']")
+    public WebElement imgFieldOfAddedFile;
+
+    @FindBy(xpath = "(//span[@class='files-text']//span)[5]")
+    public WebElement renameBtn;
+
+    @FindBy (xpath = "//input[@class='files-name-edit-inp']")
+    public WebElement renamedFileInput;
+
+    @FindBy (xpath = "//span[@title='Click to insert file']")
+    public WebElement renamedFileUsetoTextAssert;
+
 
 
 
@@ -173,5 +189,43 @@ public class UploadFilePage_Erdal {
         Driver.getDriver().switchTo().parentFrame();
 
     }
+
+    public void deleteFiles(){
+
+        delBtn3.click();
+        delBtn2.click();
+        delBtn1.click();
+        BrowserUtils.sleep(1);
+
+    }
+
+    public void verifyDeletedFiles(){
+        BrowserUtils.verifyElementNotDisplayed(By.xpath("//tbody/tr[1]/td[@class='files-del-btn']/span[@class='del-but']"));
+    }
+
+    public void uploadOneFile() {
+        BrowserUtils.sleep(2);
+        uploadFileAndImagesBox.sendKeys("C:\\Users\\a\\Dropbox\\My PC (Guardians)\\Desktop\\Upload files for E10Project\\gifsample.gif");
+    }
+
+    public void renameFile(String string){
+
+        renamedFileInput.click();
+        renamedFileInput.sendKeys(Keys.chord(Keys.CONTROL, "a")+Keys.CLEAR);
+//        renamedFileInput.clear();
+//        renamedFileInput.sendKeys(Keys.CLEAR);
+        renamedFileInput.sendKeys(string);
+        renamedFileInput.sendKeys(Keys.ENTER);
+        BrowserUtils.sleep(1);
+    }
+
+    public void verifyRenamedFile(){
+        String actualName = renamedFileUsetoTextAssert.getText();
+        String expectedName = "renamedFile.gif";
+//        System.out.println("expectedName = " + expectedName);
+//        System.out.println("actualName = " + actualName);
+        Assert.assertEquals(actualName,expectedName);
+    }
+
 
 }

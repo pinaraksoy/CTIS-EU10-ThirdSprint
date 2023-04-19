@@ -28,5 +28,18 @@ Feature: Upload Files Functionality
   @CTS10-336 @CRM
   Scenario: User should be able to insert the files and images into the text
     When user should be able to upload some files
-    And User should be able to Insert uploaded file into the text field
+    And User should be able to insert uploaded file into the text field
     Then Verify files are in the text field
+
+  @CTS10-337 @CRM
+  Scenario: User should be able to remove files and images at any time before sending
+    When user should be able to upload some documents
+    And User should be able to delete files at any time before sending message
+    Then Verify files are deleted
+
+  @CTS10-338 @CRM
+  Scenario: User should be able to rename the file before sending it.
+    When user should be able to upload a file
+    And User should be able to click rename button
+    And User should be able to rename the file
+    Then Verify files are renamed

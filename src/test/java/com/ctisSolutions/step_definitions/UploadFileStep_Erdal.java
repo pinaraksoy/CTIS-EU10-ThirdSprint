@@ -3,6 +3,7 @@ package com.ctisSolutions.step_definitions;
 import com.ctisSolutions.pages.LoginPage;
 import com.ctisSolutions.pages.LogoutPage;
 import com.ctisSolutions.pages.UploadFilePage_Erdal;
+import com.ctisSolutions.utilities.BrowserUtils;
 import com.ctisSolutions.utilities.Driver;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -10,6 +11,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -76,13 +78,65 @@ public class UploadFileStep_Erdal {
         erdalPage.verifyUploadedFiles();
     }
 
-    @When("User should be able to Insert uploaded file into the text field")
-    public void user_should_be_able_to_ınsert_uploaded_file_into_the_text_field() {
+    @When("User should be able to insert uploaded file into the text field")
+    public void user_should_be_able_to_insert_uploaded_file_into_the_text_field() {
         erdalPage.insertAllUpdated();
     }
+
 
     @Then("Verify files are in the text field")
     public void verify_files_are_in_the_text_field() {
         erdalPage.verifyInsertAllUpdated();
     }
+
+    @When("user should be able to upload some documents")
+    public void user_should_be_able_to_upload_some_documents() {
+        erdalPage.uploadThreeFiles();
+    }
+
+    @When("User should be able to delete files at any time before sending message")
+    public void user_should_be_able_to_delete_files_at_any_time_before_sending_message() {
+        erdalPage.deleteFiles();
+    }
+
+    @Then("Verify files are deleted")
+    public void verify_files_are_deleted() {
+        erdalPage.verifyDeletedFiles();
+    }
+
+    @When("user should be able to upload a file")
+    public void user_should_be_able_to_upload_a_file() {
+        erdalPage.uploadOneFile();
+    }
+
+    @When("User should be able to click rename button")
+    public void user_should_be_able_to_click_rename_button() {
+
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),10);
+        wait.until(ExpectedConditions.visibilityOf(erdalPage.imgFieldOfAddedFile));
+
+//        erdalPage.clickRenameBtn();
+
+//        Actions actions = new Actions(driver);
+//        actions.moveToElement(erdalPage.imgFieldOfAddedFile);
+
+        erdalPage.imgFieldOfAddedFile.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(erdalPage.renameBtn));
+        BrowserUtils.sleep(2);
+
+        erdalPage.renameBtn.click();
+        BrowserUtils.sleep(2);
+    }
+
+    @When("User should be able to rename the file")
+    public void user_should_be_able_to_rename_the_file() {
+        erdalPage.renameFile("renamedFile");
+    }
+
+    @Then("Verify files are renamed")
+    public void verify_files_are_renamed() {
+        erdalPage.verifyRenamedFile();
+    }
+
 }
